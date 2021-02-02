@@ -20,8 +20,9 @@
     <div class="nav">
         <ul class="nav-list">
             <li>Hello  @Session["FullName"]</li>
+            <li>@Html.ActionLink("Home", "Home", "Login")</li>
             <li class="LogOut">Number of Action: @Session["ActionCounter"] </li>
-            <li class="LogOut"><a href="/Login/LogOut"> LogOut </a></li>
+            <li class="LogOut">@Html.ActionLink("LogOut", "LogOut", "Login")</li>
         </ul>
     </div>
 

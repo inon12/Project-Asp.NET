@@ -33,13 +33,15 @@
 <body style="background-color: #828284">
 
     <div class="nav">
-
         <ul class="nav-list">
             <li>Hello  @Session["FullName"]</li>
+            <li>@Html.ActionLink("Home", "Home", "Login")</li>
             <li class="LogOut">Number of Action: @Session["ActionCounter"] </li>
-            <li class="LogOut"><a href="#LogOut"> LogOut </a></li>
+            <li class="LogOut">@Html.ActionLink("LogOut", "LogOut", "Login")</li>
         </ul>
     </div>
+    
+
     <div style="background-color: #828284">
         <div class="container text-center">
             <h2>Employee Menu</h2>

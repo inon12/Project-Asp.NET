@@ -39,6 +39,18 @@ namespace Project_Asp.Net.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public ActionResult Home()
+        {
+            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            {
+                return View("HomePage");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
         public ActionResult DepartmentsMenu()
         {   
             if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] <10)
