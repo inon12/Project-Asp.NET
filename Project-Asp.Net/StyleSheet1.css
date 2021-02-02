@@ -1,0 +1,32 @@
+﻿.nav {
+    background-color: #7952B3;
+    overflow: hidden;
+    color: white;
+    height: 50px;
+    font-size: 17px;
+}
+
+    .nav a {
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+        .nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.LogOut {
+    margin-left: auto;
+}
