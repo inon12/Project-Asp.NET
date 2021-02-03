@@ -59,6 +59,7 @@
           <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Pwd" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ActionsCounter" Type="int" Nullable="false" />
+          <Property Name="LastSeen" Type="datetime" />
         </EntityType>
         <Association Name="FK__departmen__Manag__29572725">
           <End Role="employees" Type="Self.employees" Multiplicity="0..1" />
@@ -199,6 +200,7 @@
           <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Pwd" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ActionsCounter" Type="Int32" Nullable="false" />
+          <Property Name="LastSeen" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__departmen__Manag__29572725">
           <End Role="employees" Type="Self.employee" Multiplicity="0..1" />
@@ -336,6 +338,7 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Pwd" ColumnName="Pwd" />
                 <ScalarProperty Name="ActionsCounter" ColumnName="ActionsCounter" />
+                <ScalarProperty Name="LastSeen" ColumnName="LastSeen" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,41 +12,52 @@ namespace Project_Asp.Net.Controllers
         // GET: Shift
         public ActionResult ShiftsMenu()
         {
-            var result = shiftBL.GetShiftData();
-            ViewBag.shiftsData = result;
-            return View("ShiftsPage");
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            {
+                var result = shiftBL.GetShiftData();
+                ViewBag.shiftsData = result;
+                return View("ShiftsPage");
+            }
+            else
+            {
+                Session.Clear();
+                return RedirectToAction("Index", "Login");
+            }
         }
         public ActionResult EditEmp(int id1)
         {
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
                 return RedirectToAction("GetDataEditEmp", "Employee",new {id =id1});
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
         public ActionResult GetShiftFromUser()
         {
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
                 return View("GetShiftData");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
         public ActionResult AddShift(shift sh)
         {
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
                 shiftBL.Add(sh);
                 return RedirectToAction("ShiftsMenu");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }

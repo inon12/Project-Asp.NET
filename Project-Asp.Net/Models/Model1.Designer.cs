@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\inonp\OneDrive\שולחן העבודה\Full\IntroCSharp\Project-Asp.Net\Project-Asp.Net\Models\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\inonp\Source\Repos\Project-Asp.NET\Project-Asp.Net\Models\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

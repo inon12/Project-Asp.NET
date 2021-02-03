@@ -8,87 +8,84 @@ namespace Project_Asp.Net.Controllers
 {
     public class LoginController : Controller
     {
-        LoginBL LoginBL = new LoginBL();
-        // GET: Login
+        LoginBL LoginBL = new LoginBL();        // GET: Login
         public ActionResult Index()
         {
             return View("LoginPage");
         }
         public ActionResult GetLoginData(string username , string pwd)
         {
-
-
             var user = LoginBL.IsAuthenticated(username, pwd);
-            if (user != null &&(Session["Date"]==null ||( Session["Date"] != null && (DateTime) Session["Date"] != DateTime.Today.Date)))
+            if (user !=null)
             {
-                LoginBL.UpdateCounter(user.ID);
+                UserBL userBL = new UserBL(user);
+                Session["UserBL"] = userBL;
+                if (userBL.CheckActionCounter())
+                {
+                    Session["FullName"] = user.FullName;
+                    Session["ActionCounter"] = user.ActionsCounter;
+                    return View("HomePage");
+                }
             }
-
-            if (user !=null &&  user.ActionsCounter<7)
-            {
-                Session["FullName"] = user.FullName;
-                Session["ID"] = user.ID;
-                Session["ActionCounter"] = user.ActionsCounter;
-                Session["Date"] = DateTime.Today.Date;
-                Session["Authenticated"] = true;
-                return View("HomePage");
-            }
-            else
-            {
-                Session["Authenticated"] = false;
-                return RedirectToAction("Index");
-            }
+               return RedirectToAction("Index");
         }
 
         public ActionResult Home()
         {
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] !=null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
                 return View("HomePage");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
         public ActionResult DepartmentsMenu()
-        {   
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] <10)
+        {
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
+                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("Index", "Department");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
         public ActionResult ShiftsMenu()
         {
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
+                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("ShiftsMenu", "Shift");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
             
         }
         public ActionResult EmpMenu()
         {
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
+                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("EmployeeMenu", "Employee");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
         public ActionResult LogOut()
         {
-            Session["Authenticated"] = false;
-            LoginBL.LogOut((int)Session["ID"], (int)Session["ActionCounter"]);
+            ((UserBL)Session["UserBL"]).UpDateUserData();
+            Session.Clear();
             return RedirectToAction("Index", "Login");
             
         }

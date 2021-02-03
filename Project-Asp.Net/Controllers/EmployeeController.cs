@@ -15,27 +15,25 @@ namespace Project_Asp.Net.Controllers
         public ActionResult EmployeeMenu()
         {
 
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
-                Session["ActionCounter"] = (int)Session["ActionCounter"] + 1;
                 var result = EmployeeBL.EmployeeList();
                 ViewBag.EmpData = result;
                 return View("Employees");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
        
         
-        
         public ActionResult GetDataEditEmp(int id)
         {
 
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
-                Session["ActionCounter"] = (int)Session["ActionCounter"]+1;
                 var result = EmployeeBL.GetEmployee(id);
                 var dep = EmployeeBL.GetDepartments();
                 ViewBag.Departments = dep;
@@ -44,81 +42,85 @@ namespace Project_Asp.Net.Controllers
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
         public ActionResult UpdateEmp(employee emp)
         {
 
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
             {
-                Session["ActionCounter"] = (int)Session["ActionCounter"] + 1;
                 EmployeeBL.UpdateEmp(emp);
+                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("EmployeeMenu");
             }
             else
             {
+                Session.Clear();
                 return RedirectToAction("Index", "Login");
             }
         }
         
             public ActionResult AddShiftToEmployee(int id)
             {
-                
-            if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
+
+                if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
                 {
-                Session["ActionCounter"] = (int)Session["ActionCounter"] + 1;
-                EmployeeShift emp =new EmployeeShift();
-                emp.EmployeeID = id;
-                    return View("GetEmpShiftData",emp);
+                    EmployeeShift emp =new EmployeeShift();
+                    emp.EmployeeID = id;
+                        return View("GetEmpShiftData",emp);
                 }
                 else
                 {
+                    Session.Clear();
                     return RedirectToAction("Index", "Login");
                 }
             }
 
             public ActionResult AddShiftEmp(EmployeeShift emp)
             {
-                if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
-                {
-                Session["ActionCounter"] = (int)Session["ActionCounter"] + 1;
-                EmployeeBL.AddShift(emp);
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+               {
+                    EmployeeBL.AddShift(emp);
+                    ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                     return RedirectToAction("EmployeeMenu");
                 }
                 else
                 {
+                    Session.Clear();
                     return RedirectToAction("Index", "Login");
                 }
              }
             public ActionResult DelEmp(int id)
             {
-                if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] <10)
-                {
-                Session["ActionCounter"] = (int)Session["ActionCounter"] + 1;
-                EmployeeBL.Remove(id);
-                    return RedirectToAction("EmployeeMenu");
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            {
+                     EmployeeBL.Remove(id);
+                     ((UserBL)Session["UserBL"]).user.ActionsCounter--;
+                     return RedirectToAction("EmployeeMenu");
                 }
                 else
                 {
+                    Session.Clear();
                     return RedirectToAction("Index", "Login");
                 }
             }
             [HttpGet]
             public ActionResult SearchEmp(string text)
             {
-                if (Session["Authenticated"] != null && (bool)Session["Authenticated"] == true && (int)Session["ActionCounter"] < 10)
-                {
-                Session["ActionCounter"] = (int)Session["ActionCounter"] + 1;
-                var result= EmployeeBL.SearchEmp(text);
-                    ViewBag.EmpData = result;
-                     return View("ResultSearchEmployee");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Login");
-                }
-            }
+                if (Session["UserBL"] !=null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+                    {
+                         var result= EmployeeBL.SearchEmp(text);
+                         ViewBag.EmpData = result;
+                         return View("ResultSearchEmployee");
+                    }
+                    else
+                    {
+                        Session.Clear();
+                        return RedirectToAction("Index", "Login");
+                    }
+             }
 
     }
 }
