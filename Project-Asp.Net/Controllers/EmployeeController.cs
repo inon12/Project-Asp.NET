@@ -15,7 +15,7 @@ namespace Project_Asp.Net.Controllers
         public ActionResult EmployeeMenu()
         {
 
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 var result = EmployeeBL.EmployeeList();
                 ViewBag.EmpData = result;
@@ -32,7 +32,7 @@ namespace Project_Asp.Net.Controllers
         public ActionResult GetDataEditEmp(int id)
         {
 
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 var result = EmployeeBL.GetEmployee(id);
                 var dep = EmployeeBL.GetDepartments();
@@ -49,10 +49,9 @@ namespace Project_Asp.Net.Controllers
         public ActionResult UpdateEmp(employee emp)
         {
 
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
                 EmployeeBL.UpdateEmp(emp);
-                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("EmployeeMenu");
             }
             else
@@ -65,7 +64,7 @@ namespace Project_Asp.Net.Controllers
             public ActionResult AddShiftToEmployee(int id)
             {
 
-                if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+                if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
                 {
                     EmployeeShift emp =new EmployeeShift();
                     emp.EmployeeID = id;
@@ -80,10 +79,9 @@ namespace Project_Asp.Net.Controllers
 
             public ActionResult AddShiftEmp(EmployeeShift emp)
             {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
                {
                     EmployeeBL.AddShift(emp);
-                    ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                     return RedirectToAction("EmployeeMenu");
                 }
                 else
@@ -94,10 +92,9 @@ namespace Project_Asp.Net.Controllers
              }
             public ActionResult DelEmp(int id)
             {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
                      EmployeeBL.Remove(id);
-                     ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                      return RedirectToAction("EmployeeMenu");
                 }
                 else
@@ -109,7 +106,7 @@ namespace Project_Asp.Net.Controllers
             [HttpGet]
             public ActionResult SearchEmp(string text)
             {
-                if (Session["UserBL"] !=null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+                if (Session["UserBL"] !=null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
                     {
                          var result= EmployeeBL.SearchEmp(text);
                          ViewBag.EmpData = result;

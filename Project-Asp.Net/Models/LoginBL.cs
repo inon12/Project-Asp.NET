@@ -21,18 +21,5 @@ namespace Project_Asp.Net.Models
                 return null;
             }
         } 
-        public void LogOut(int id , int counter)
-        {
-
-            var result = db.users.Where(x => x.ID == id).First();
-            result.ActionsCounter = counter;
-            db.SaveChanges();
-        }
-        public void UpdateCounter(int id)
-        {
-            var result = db.users.Where(x => x.ID == id).First();
-            result.ActionsCounter = 0;
-            db.SaveChanges();
-        }
     }
 }

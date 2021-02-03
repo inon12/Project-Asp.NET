@@ -55,12 +55,6 @@ namespace Project_Asp.Net.Models
             db.SaveChanges();
         }
 
-        // public EmployeeShift GetEmployeeShift(int id)
-        //{
-        //    var result = db.EmployeeShifts.Where(x => x.ID == id).First();
-        //    return result;
-        //}
-        
             public void AddShift(EmployeeShift emp)
              {
                  db.EmployeeShifts.Add(emp);
@@ -69,15 +63,18 @@ namespace Project_Asp.Net.Models
         
             public void Remove(int id)
             {
-              var emp = db.employees.Where(x => x.ID == id).First();
-            var shifts = db.EmployeeShifts.Where(x => x.EmployeeID == id).ToList();
-            db.employees.Remove(emp);
-            foreach (var shift in shifts)
-            {
-                db.EmployeeShifts.Remove(shift);
-            }
-              db.SaveChanges();
-            }
+                var emp = db.employees.Where(x => x.ID == id).First();
+                var shifts = db.EmployeeShifts.Where(x => x.EmployeeID == id).ToList();
+                db.employees.Remove(emp);
+                if (shifts.Count > 0)
+                {
+                    foreach (var shift in shifts)
+                    {
+                        db.EmployeeShifts.Remove(shift);
+                    }
+                }
+                  db.SaveChanges();
+                }
         
              public List<EmployeeData> SearchEmp(string  SearchText)
               {
@@ -103,7 +100,7 @@ namespace Project_Asp.Net.Models
                                                     EndTime = (int)sh.EndTime,
                                                 }).ToList()
                                   }).ToList();
-                      var  resultFilter = result.Where(x => x.FullName.Contains(SearchText) || x.Department.Contains(SearchText)).ToList();
+                      var  resultFilter = result.Where(x => x.FullName.ToLower().Contains(SearchText.ToLower()) || x.Department.ToLower().Contains(SearchText.ToLower())).ToList();
                    return resultFilter;
               }
     }

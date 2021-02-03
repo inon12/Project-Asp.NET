@@ -15,7 +15,7 @@ namespace Project_Asp.Net.Controllers
           
         public ActionResult Index()
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 var departments = DepartmentBL.GetDepartmentsData();
                 ViewBag.departments = departments;
@@ -28,7 +28,7 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult GetDepartment(int id)
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 var deparment = DepartmentBL.GetDepartmentData(id);
                 var emp = DepartmentBL.GetEmpData();
@@ -42,7 +42,7 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult UpdateDep(department dep)
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
                 DepartmentBL.Update(dep);
                 return RedirectToAction("Index");
@@ -54,7 +54,7 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult DeleteDep(department dep)
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 DepartmentBL.Delete(dep);
                 return RedirectToAction("Index");
@@ -66,7 +66,7 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult GetDepartmentDataFromUser()
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 var emp = DepartmentBL.GetEmpData();
                 ViewBag.emp = emp;
@@ -81,7 +81,7 @@ namespace Project_Asp.Net.Controllers
         
             public ActionResult AddDep(department dep)
             {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                     DepartmentBL.Add(dep);
                     return RedirectToAction("Index");

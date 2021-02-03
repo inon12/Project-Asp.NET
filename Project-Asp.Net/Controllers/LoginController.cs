@@ -20,7 +20,7 @@ namespace Project_Asp.Net.Controllers
             {
                 UserBL userBL = new UserBL(user);
                 Session["UserBL"] = userBL;
-                if (userBL.CheckActionCounter())
+                if (userBL.CheckActionCounter(1))
                 {
                     Session["FullName"] = user.FullName;
                     Session["ActionCounter"] = user.ActionsCounter;
@@ -32,7 +32,7 @@ namespace Project_Asp.Net.Controllers
 
         public ActionResult Home()
         {
-            if (Session["UserBL"] !=null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] !=null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 return View("HomePage");
             }
@@ -44,9 +44,8 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult DepartmentsMenu()
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
-                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("Index", "Department");
             }
             else
@@ -57,9 +56,8 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult ShiftsMenu()
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
-                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("ShiftsMenu", "Shift");
             }
             else
@@ -71,9 +69,8 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult EmpMenu()
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
-                ((UserBL)Session["UserBL"]).user.ActionsCounter--;
                 return RedirectToAction("EmployeeMenu", "Employee");
             }
             else

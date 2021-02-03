@@ -12,7 +12,7 @@ namespace Project_Asp.Net.Controllers
         // GET: Shift
         public ActionResult ShiftsMenu()
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 var result = shiftBL.GetShiftData();
                 ViewBag.shiftsData = result;
@@ -26,7 +26,7 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult EditEmp(int id1)
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
                 return RedirectToAction("GetDataEditEmp", "Employee",new {id =id1});
             }
@@ -38,7 +38,7 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult GetShiftFromUser()
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(1))
             {
                 return View("GetShiftData");
             }
@@ -50,7 +50,7 @@ namespace Project_Asp.Net.Controllers
         }
         public ActionResult AddShift(shift sh)
         {
-            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter())
+            if (Session["UserBL"] != null && ((UserBL)Session["UserBL"]).CheckActionCounter(0))
             {
                 shiftBL.Add(sh);
                 return RedirectToAction("ShiftsMenu");

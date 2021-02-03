@@ -9,20 +9,19 @@ namespace Project_Asp.Net.Models
     {
 
         public  user user;
-        private int  limitAction = 15 ;
+        private int  limitAction = 35 ;
         factoryDBEntities db = new factoryDBEntities();
         
         public UserBL(user user2)
         {
             user = user2;
         }
-        public bool CheckActionCounter()
+        public bool CheckActionCounter(int num)
         {
            CheckDate();
            if(user.ActionsCounter < limitAction)
-            {
-                
-                user.ActionsCounter= user.ActionsCounter+1;
+            {  
+                user.ActionsCounter= user.ActionsCounter+num;
                 HttpContext.Current.Session["ActionCounter"] = user.ActionsCounter;
                 UpDateUserData();
                 return true;
